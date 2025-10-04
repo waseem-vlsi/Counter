@@ -1,8 +1,6 @@
-
 module clock_divider(
 input clk,rst,
-output reg clk_dummy,
-output reg [3:0]cnt ) ;
+output reg clk_dummy ) ;
 reg [31:0]count;
 
 always@(posedge clk)
@@ -79,9 +77,9 @@ module up_down_counter_with_clk_divider(
 input sel,clk,rst,enable,
 output [3:0]count_up, count_down);
 wire out1,out2, clk_dummy;
+clock_divider s4(.clk(clk), .rst(rst), .clk_dummy(clk_dummy));
 d_mux s3( .enable(enable), .sel(sel), .out1(out1), .out2(out2));
  up_counter s1(.clk_dummy(clk_dummy),.enable(out1),.rst(rst), .count_up(count_up)); 
  down_counter s2(.clk_dummy(clk_dummy),.enable(out2), .rst(rst), .count_down(count_down));
 
 endmodule
-
